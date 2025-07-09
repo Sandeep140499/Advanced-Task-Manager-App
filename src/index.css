@@ -1,68 +1,277 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  padding: 0;
   min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.light {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #222;
+}
+
+body.dark {
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+  color: #f5f5f5;
+}
+
+.app {
+  max-width: auto;
+  height: auto;
+  text-align: center;
+  margin: 2.5rem auto;
+  padding: 2rem 1.5rem 2.5rem 1.5rem;
+  background: rgba(255,255,255,0.95);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(60,60,60,0.12);
+  position: relative;
+  transition: background 0.3s;
+}
+
+body.dark .app {
+  background: rgba(34, 34, 34, 0.95);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.filter-btns {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.filter-btns button {
+  background: #e2e8f0;
+  border: none;
+  border-radius: 1.2rem;
+  padding: 0.4rem 1.1rem;
+  font-size: 1rem;
+  color: #333;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: background 0.2s, color 0.2s;
+  font-weight: 500;
+  outline: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+body.dark .filter-btns button {
+  background: #2d3748;
+  color: #f5f5f5;
+}
+
+.filter-btns button:hover,
+.filter-btns button:focus {
+  background: #6366f1;
+  color: #fff;
+}
+
+.task-item {
+  transition: all 0.3s cubic-bezier(.4,2,.3,1), opacity 0.3s;
+  margin: 0.7rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  opacity: 1;
+  animation: fadeIn 0.4s;
+  background: #f1f5f9;
+  border-radius: 1rem;
+  padding: 0.7rem 1rem;
+  box-shadow: 0 2px 8px rgba(60,60,60,0.04);
+  font-size: 1.08rem;
+  position: relative;
+}
+
+body.dark .task-item {
+  background: #23272f;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.task-draggable.dragging {
+  background: #c7d2fe;
+  box-shadow: 0 4px 16px rgba(99,102,241,0.18);
+}
+
+body.dark .task-draggable.dragging {
+  background: #373a47;
+}
+
+.task-item:hover {
+  transform: scale(1.025);
+  background-color: #e0e7ef;
+}
+
+body.dark .task-item:hover {
+  background-color: #2d3340;
+}
+
+.task-item input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  accent-color: #6366f1;
+  cursor: pointer;
+}
+
+.task-item .task-text {
+  flex: 1;
+  word-break: break-word;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #94a3b8;
+  opacity: 0.7;
+}
+
+body.dark .task-item.completed .task-text {
+  color: #64748b;
+}
+
+.delete-btn {
+  background: #f87171;
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-left: 0.5rem;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+.task-input-container {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 1.3rem;
+}
+
+.task-input-container input[type="text"] {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border-radius: 1.2rem;
+  border: 1px solid #cbd5e1;
+  font-size: 1.08rem;
+  outline: none;
+  transition: border 0.2s;
+  background: #f8fafc;
+}
+
+body.dark .task-input-container input[type="text"] {
+  background: #23272f;
+  border: 1px solid #374151;
+  color: #f5f5f5;
+}
+
+.task-input-container input[type="text"]:focus {
+  border: 1.5px solid #6366f1;
+}
+
+.add-btn {
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 1.2rem;
+  padding: 0.7rem 1.3rem;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-btn:hover {
+  background: #4338ca;
+}
+
+.theme-toggle-btn {
+  position: absolute;
+  top: 1.3rem;
+  right: 1.3rem;
+  background: #e0e7ef;
+  border: none;
+  border-radius: 50%;
+  width: 2.3rem;
+  height: 2.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #6366f1;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px rgba(60,60,60,0.08);
+}
+
+body.dark .theme-toggle-btn {
+  background: #23272f;
+  color: #fbbf24;
+}
+
+.theme-toggle-btn:hover {
+  background: #6366f1;
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #e5e7eb;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+body.dark ::-webkit-scrollbar {
+  background: #23272f;
+}
+body.dark ::-webkit-scrollbar-thumb {
+  background: #374151;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .app {
+    max-width: 98vw;
+    padding: 1rem 0.3rem 1.5rem 0.3rem;
   }
-  a:hover {
-    color: #747bff;
+  .task-item {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1rem;
+    padding: 0.7rem 0.7rem;
   }
-  button {
-    background-color: #f9f9f9;
+  .theme-toggle-btn {
+    top: 0.7rem;
+    right: 0.7rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .app {
+    padding: 0.3rem;
+  }
+  .task-item {
+    font-size: 0.92rem;
   }
 }
