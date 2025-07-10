@@ -13,16 +13,15 @@ const TaskItem = ({ task }) => {
   }, [dispatch, task.id]);
 
   return (
-    <div className="task-item">
+    <div className={`task-item${task.completed ? ' completed' : ''}`}>
       <input
         type="checkbox"
         checked={task.completed}
         onChange={toggleTask}
+        aria-label={task.completed ? 'Mark as pending' : 'Mark as completed'}
       />
-      <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
-        {task.text}
-      </span>
-      <button onClick={deleteTask}>🗑️</button>
+      <span className="task-text">{task.text}</span>
+      <button className="delete-btn" onClick={deleteTask} aria-label="Delete task">🗑️</button>
     </div>
   );
 };

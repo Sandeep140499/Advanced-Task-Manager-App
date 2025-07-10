@@ -14,8 +14,14 @@ const TaskInput = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Add a task" />
-      <button type="submit">Add</button>
+      <input
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Add a task"
+        type="text"
+        aria-label="Add a task"
+      />
+      <button type="submit" className="add-btn">Add</button>
     </form>
   );
 };
